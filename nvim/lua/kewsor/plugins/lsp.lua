@@ -23,13 +23,11 @@ return {
             {},
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
-        vim.g.python3_host_prog = '/home/kewsor/binaries/env/bin/python3'
-
 
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "volar", "clangd", "gopls", "lua_ls", "tailwindcss",
+                "clangd", "gopls", "lua_ls",
             },
             handlers = {
                 function(server_name)
@@ -37,22 +35,29 @@ return {
                         capabilities = capabilities
                     }
                 end,
-                ["volar"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.volar.setup {
-                        capabilities = capabilities,
-                    }
-                end,
-            }
+            },
         })
         local null_ls = require("null-ls")
         null_ls.setup({
             sources = {
+                null_ls.builtins.formatting.clang_format,
                 null_ls.builtins.formatting.prettier.with({
-                    filetypes = { "typescript", "typescriptreact", "vue" },
+                    filetypes = { "typescript" },
                     extra_args = { "--config-precedence", "prefer-file" },
                 }),
             },
+        })
+
+        -- remove "undefined global viariable vim" warning
+        local lua_ls = require("lspconfig")
+        lua_ls.lua_ls.setup({
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim" },
+                    }
+                }
+            }
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -88,8 +93,5 @@ return {
                 max_height = 100,
             },
         })
-        vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "next diagnostic" })
-        vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
-        vim.keymap.set("n", "<leader>dw", vim.diagnostic.open_float, { desc = "diagnostics window" })
-    end
+           end
 }

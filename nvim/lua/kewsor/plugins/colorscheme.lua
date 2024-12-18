@@ -1,10 +1,12 @@
 return {
     {
-        "sekke276/dark_flat.nvim",
+        "blazkowolf/gruber-darker.nvim",
+        --"Abstract-IDE/Abstract-cs",
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd("colorscheme dark_flat")
+            vim.cmd("colorscheme gruber-darker")
+            --vim.cmd("colorscheme abscs")
         end
     },
 }

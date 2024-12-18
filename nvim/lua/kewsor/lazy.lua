@@ -24,5 +24,4 @@ require("lazy").setup({
     require("kewsor.plugins.lsp"),
     require("kewsor.plugins.snippets"),
     require("kewsor.plugins.undotree"),
-    require("kewsor.plugins.tailwind")
 })

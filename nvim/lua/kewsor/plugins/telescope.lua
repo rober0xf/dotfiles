@@ -15,14 +15,12 @@ return {
             })
         end)
 
-        vim.keymap.set("n", "<C-p>", builtin.git_files, {})
-
-        -- search for a word
+        -- search for a word in the current file
         vim.keymap.set("n", "<leader>pg", function()
             builtin.current_buffer_fuzzy_find()
         end, { noremap = true, silent = true })
 
-        -- search for the word
+        -- search for a word from the beggining
         vim.keymap.set("n", "<leader>pws", function()
             local word = vim.fn.expand("<cword>")
             print("searching the word: ", word)
