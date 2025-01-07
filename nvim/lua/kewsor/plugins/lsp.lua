@@ -4,6 +4,7 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
+        "nvim-lua/plenary.nvim",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
@@ -11,9 +12,9 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "jose-elias-alvarez/null-ls.nvim",
-        "pmizio/typescript-tools.nvim",
+        "supermaven-inc/supermaven-nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
-
 
     config = function()
         local cmp = require("cmp")
@@ -27,25 +28,47 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "clangd", "gopls", "lua_ls",
+                "clangd", "gopls", "lua_ls", "pylsp"
             },
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
                     }
                 end,
             },
         })
+        require("mason-tool-installer").setup({
+            ensure_installed = {
+                "mypy", "pylsp",
+            },
+        })
+
         local null_ls = require("null-ls")
         null_ls.setup({
             sources = {
                 null_ls.builtins.formatting.clang_format,
-                null_ls.builtins.formatting.prettier.with({
-                    filetypes = { "typescript" },
-                    extra_args = { "--config-precedence", "prefer-file" },
-                }),
             },
+        })
+        local cmp_nvim_lsp = require "cmp_nvim_lsp"
+        require("lspconfig").clangd.setup {
+            --on_attach = on_attach,
+            capabilities = cmp_nvim_lsp.default_capabilities(),
+            cmd = {
+                "clangd",
+                "--offset-encoding=utf-16",
+            },
+        }
+
+        -- path to the python environment
+        vim.g.python3_host_prog = '/home/kewsor/binaries/env/bin/python3'
+        require("lspconfig").pylsp.setup({
+            capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+            settings = {
+                python = {
+                    pythonPath = vim.g.python3_host_prog
+                }
+            }
         })
 
         -- remove "undefined global viariable vim" warning
@@ -72,26 +95,40 @@ return {
                 ["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
                 ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
+                ["<C-->"] = function(fallback)
+                    local supermaven = require("supermaven-nvim")
+                    if supermaven and supermaven.accept_suggestion then
+                        supermaven.accept_suggestion()
+                    else
+                        fallback()
+                    end
+                end,
             }),
+
             sources = cmp.config.sources({
+                -- primary data source
                 { name = "nvim_lsp" },
-                { name = "luasnip" }
+                { name = "luasnip" },
+                { name = "supermaven" },
             }, {
+                -- secondary data source
                 { name = "buffer" },
+                { name = "path" },
             })
         })
+
         vim.diagnostic.config({
             update_in_insert = true,
             float = {
-                focusable = false,
+                focusable = true,
                 style = "rounded",
                 border = "rounded",
                 source = "always",
                 header = "",
-                prefix = "➤",
+                prefix = "-",
                 max_width = 100,
                 max_height = 100,
             },
         })
-           end
+    end
 }

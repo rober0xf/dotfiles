@@ -3,7 +3,7 @@ return {
     build = ":TSUpdate",
     config = function()
         require('nvim-treesitter.configs').setup {
-            ensure_installed = { "go", "c", "lua" },
+            ensure_installed = { "go", "c", "cpp", "lua", "python" },
             sync_install = false,
             auto_install = false,
             highlight = {
