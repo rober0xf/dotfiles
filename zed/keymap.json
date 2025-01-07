@@ -1,0 +1,62 @@
+[
+    {
+        "context": "VimControl && !menu",
+        "bindings": {
+            "L": "vim::EndOfLine",
+            "A": "vim::StartOfLine",
+            "space o": "tab_switcher::Toggle",
+            "space x": "workspace::ToggleLeftDock",
+            "g c c": "editor::ToggleComments",
+            "space f": "editor::Format",
+            "space d w": "editor::GoToDiagnostic",
+            "space d p": "editor::GoToPrevDiagnostic",
+            "space p f": "file_finder::Toggle",
+            "space i": "editor::Hover",
+            "space s": "vim::Search",
+            "ctrl-l": "pane::GoBack",
+            "space p G": "workspace::NewSearch"
+        }
+    },
+
+    {
+        "context": "vim_mode == visual && !menu",
+        "bindings": {
+            "y": "vim::VisualYank",
+            "Y": "vim::VisualYankLine",
+            "K": "editor::MoveLineUp",
+            "J": "editor::MoveLineDown"
+        }
+    },
+
+    {
+        "context": "vim_mode == normal && !menu",
+        "bindings": {
+            "space u": "vim::Undo",
+            "space r": "vim::Redo",
+            "space g r": "editor::FindAllReferences",
+            "space g d": "editor::GoToDefinitionSplit",
+            "Y": "vim::YankLine",
+            "K": "editor::MoveLineUp",
+            "J": "editor::MoveLineDown"
+        }
+    },
+    {
+        "context": "vim_mode == insert",
+        "bindings": {}
+    },
+    {
+        "context": "EmptyPane || SharedScreen",
+        "bindings": {
+            // Put key bindings here (in addition to the context above) if you want them to
+            // work when no editor exists.
+        }
+    },
+
+    {
+        "context": "Editor && (showing_code_actions || showing_completions)",
+        "bindings": {
+            "alt-a": "editor::ContextMenuPrev",
+            "tab": "editor::ContextMenuNext"
+        }
+    }
+]
