@@ -1,8 +1,8 @@
 set $mod Mod4
-exec_always feh --bg-scale ~/.config/i3/wallpaper.jpg
+exec_always feh --bg-scale ~/.config/i3/rick.png
 exec --no-startup-id setxkbmap latam
 
-font pango:Meslo LGM Nerd Font 12 
+font pango:Noto Sans Bold 10 
 
 exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 exec --no-startup-id dex --autostart --environment i3
@@ -21,7 +21,8 @@ bindsym $mod+Return exec kitty
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+#bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show drun 
 
 # take a screenshot
 bindsym $mod+Shift+s exec flameshot gui
@@ -57,7 +58,7 @@ bindsym $mod+n split h
 bindsym $mod+v split v
 
 # launch firefox key bind
-bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+f exec chromium 
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -133,29 +134,6 @@ mode "resize" {
 }
 
 bar {
-    font pango:monospace 9 
-    status_command i3status
-    #tray_output primary
-    colors {
-        background $bg
-        focused_workspace  #4c7899 #285577 #ffffff
-        active_workspace   #333333 #5f676a #ffffff
-        inactive_workspace #222222 #333333 #888888
-        urgent_workspace   #2f343a #900000 #ffffff
-    }
+    status_command SCRIPT_DIR=~/.config/i3blocks/scripts i3blocks
 }
 
-set $bg #272727
-set $fg #a89984
-set $red #fb4934
-set $white #fbf1c7
-set $black #000000
-set $blue #191979
-set $yellow #d65d0e
-
-client.focused           $yellow     $yellow     $black     $yellow $yellow
-client.focused_inactive  $bg     $bg     $black     $black   $bg
-client.unfocused         $bg     $bg     $black     $black   $bg
-client.urgent            $bg     $red    $bg     $red    $red
-client.placeholder       $bg     $bg     $fg     $bg     $bg
-client.background        $bg
