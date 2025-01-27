@@ -17,12 +17,16 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # start a terminal
 bindsym $mod+Return exec kitty 
 
+# change brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +200
+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 200- 
+
 # kill focused window
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec --no-startup-id rofi -show drun 
+bindsym $mod+d exec --no-startup-id dmenu_run
 
 # take a screenshot
 bindsym $mod+Shift+s exec flameshot gui
@@ -58,7 +62,7 @@ bindsym $mod+n split h
 bindsym $mod+v split v
 
 # launch firefox key bind
-bindsym $mod+Shift+f exec chromium 
+bindsym $mod+Shift+f exec firefox 
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking

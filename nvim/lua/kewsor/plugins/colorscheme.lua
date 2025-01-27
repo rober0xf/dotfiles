@@ -1,10 +1,10 @@
 return {
     {
-        "blazkowolf/gruber-darker.nvim",
+        "bluz71/vim-moonfly-colors",
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd.colorscheme("gruber-darker")
+            vim.cmd.colorscheme("moonfly")
         end
     },
 }

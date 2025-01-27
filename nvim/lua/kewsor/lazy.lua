@@ -16,7 +16,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     end
 end
 vim.opt.rtp:prepend(lazypath)
-vim.g.python3_host_prog = '/home/kewsor/binaries/env/bin/python3'
 
 require("lazy").setup({
     require("kewsor.plugins.treesitter"),
@@ -25,6 +24,4 @@ require("lazy").setup({
     require("kewsor.plugins.undotree"),
     require("kewsor.plugins.fidget"),
     require("kewsor.plugins.fzf"),
-    require("kewsor.plugins.lualine"),
-    require("kewsor.plugins.supermaven"),
 })
