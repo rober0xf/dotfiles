@@ -40,3 +40,6 @@ map('n', '<C-p>', '<C-^>', { noremap = true, silent = true, desc = 'previous fil
 map("v", "g c", "<Plug>Commentary", { noremap = true, silent = true, desc = "comment the current line" })
 
 map("n", "}", ":noh<CR>", { noremap = true, silent = true, desc = "remove the search highlight" })
+
+map('n', 'x', '"_x')
+map('n', 'd', '"_d')

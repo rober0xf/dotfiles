@@ -1,4 +1,6 @@
 require("kewsor.lazy")
 require("kewsor.set")
 require("kewsor.remap")
-vim.g.python3_host_prog = "~/binaries/env/bin/python3"
+
+-- background of line number
+vim.cmd('hi! LineNr guibg=none ctermbg=none')

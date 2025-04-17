@@ -7,54 +7,68 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-    "features": {
-        "inline_completion_provider": "none"
-    },
-    "vim_mode": true,
-    "telemetry": {
-        "diagnostics": false,
-        "metrics": false
-    },
-    "ui_font_family": "Noto Sans",
-    "ui_font_size": 16,
-    "buffer_font_size": 16,
-    "theme": "XY-Zed",
-    "format_on_save": "off",
-    "use_autoclose": false,
-    "languages": {
-        "Python": {
-            "language_servers": ["pyright", "ruff"]
+  "features": {
+    "edit_prediction_provider": "none"
+  },
+  "vim_mode": true,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "ui_font_family": "Noto Sans",
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "theme": "vscode",
+  "format_on_save": "off",
+  "use_autoclose": false,
+  "languages": {
+    "Python": {
+      "language_servers": ["pyright"],
+      "formatter": {
+        "external": {
+          "command": "/home/rober/lsp/.venv/bin/ruff",
+          "arguments": ["format", "-", "--line-length", "150"]
         }
-    },
-    "lsp": {
-        "gopls": {
-            "initialization_options": {
-                "hints": {
-                    "assignVariableTypes": true,
-                    "compositeLiteralFields": true,
-                    "compositeLiteralTypes": true,
-                    "constantValues": true,
-                    "functionTypeParameters": true,
-                    "parameterNames": true,
-                    "rangeVariableTypes": true
-                }
-            }
-        },
-
-        "clangd": {
-            "binary": {
-                "path": "/usr/bin/clangd",
-                "arguments": ["-j4", "--background-index"]
-            }
-        },
-
-        "rust_analyzer": {
-            "binary": {
-                "path": "/home/kewsor/.cargo/bin/rust-analyzer",
-                "arguments": []
-            }
+      }
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "hints": {
+          "assignVariableTypes": true,
+          "compositeLiteralFields": true,
+          "compositeLiteralTypes": true,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
         }
+      }
     },
 
-    "soft_wrap": "editor_width"
+    "pyright": {
+      "settings": {
+        "python.analysis": {
+          "diagnosticMode": "workspace",
+          "typeCheckingMode": "strict"
+        }
+      }
+    },
+
+    "clangd": {
+      "binary": {
+        "path": "/usr/bin/clangd"
+      }
+    },
+
+    "rust_analyzer": {
+      "binary": {
+        "path": "/home/rober/.cargo/bin/rust-analyzer",
+        "arguments": []
+      }
+    }
+  },
+
+  "soft_wrap": "editor_width"
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wifi_signal=$(iw dev wlan0 link | grep signal | awk '{print $2}')
+wifi_signal=$(iw dev wlp0s20f3 link | grep signal | awk '{print $2}')
 
 if [ -z "$wifi_signal" ]; then
     wifi_signal="0" 

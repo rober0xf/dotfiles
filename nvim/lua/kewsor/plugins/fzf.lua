@@ -1,12 +1,11 @@
 return {
     "ibhagwan/fzf-lua",
     dependencies = {
-        --        "nvim-lua/plenary.nvim"
+        "nvim-lua/plenary.nvim"
     },
 
     config = function()
         local fzf = require("fzf-lua")
-
         fzf.setup({
             files = {
                 cmd =
@@ -15,7 +14,8 @@ return {
                 file_icons = false
             },
             grep = {
-                rg_opts = "-g '!*.log' -g '!database/' -g '!.git/' -g '!node_modules/' -g '!go.sum' -g '!go.mod'",
+                rg_opts =
+                "--column --line-number -g '!*.log' -g '!database/' -g '!.git/' -g '!node_modules/' -g '!go.sum' -g '!go.mod'",
                 no_esc = true
             }
         })
@@ -50,5 +50,10 @@ return {
         vim.keymap.set("n", "<leader>vh", function()
             fzf.help_tags()
         end, { noremap = true, silent = true })
+
+        vim.keymap.set("n", "<leader>gs", function()
+            fzf.git_status()
+        end, { noremap = true, silent = true, desc = "Git FZF (S)tatus" })
     end
+
 }

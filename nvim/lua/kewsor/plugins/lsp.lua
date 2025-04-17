@@ -11,7 +11,7 @@ return {
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim"
     },
 
     config = function()
@@ -26,7 +26,7 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "clangd", "gopls", "lua_ls", "rust_analyzer"
+                "clangd", "gopls", "lua_ls"
             },
             handlers = {
                 function(server_name)
@@ -38,7 +38,7 @@ return {
         })
         local rust = require("lspconfig")
         rust.rust_analyzer.setup({
-            cmd = { "/home/kewsor/.cargo/bin/rust-analyzer" },
+            cmd = { "/home/rober/.cargo/bin/rust-analyzer" },
             settings = {
                 ['rust-analyzer'] = {
                     checkOnSave = {
@@ -106,6 +106,7 @@ return {
 
         vim.diagnostic.config({
             update_in_insert = true,
+            virtual_text = true,
             float = {
                 focusable = true,
                 style = "rounded",

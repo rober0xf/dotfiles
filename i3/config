@@ -1,6 +1,8 @@
 set $mod Mod4
-exec_always feh --bg-scale ~/.config/i3/rick.png
+exec_always feh --bg-scale ~/.config/i3/tool.png
 exec --no-startup-id setxkbmap latam
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000
 
 font pango:Noto Sans Bold 10 
 
@@ -9,8 +11,8 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
 
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -18,12 +20,15 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym $mod+Return exec kitty 
 
 # change brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +200
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +400
 
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 200- 
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 400- 
 
 # kill focused window
 bindsym $mod+q kill
+
+# disable F1
+bindsym F1 nop
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
