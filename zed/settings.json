@@ -1,37 +1,31 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Material Icon Theme",
   "features": {
     "edit_prediction_provider": "none"
-  },
+  }, // END_FEATURES
   "vim_mode": true,
   "telemetry": {
     "diagnostics": false,
     "metrics": false
-  },
+  }, // END_TELEMETRY
   "ui_font_family": "Noto Sans",
   "ui_font_size": 16,
   "buffer_font_size": 16,
-  "theme": "vscode",
+  "theme": "Oxocarbon Dark (IBM Carbon)",
   "format_on_save": "off",
+  "show_whitespaces": "boundary",
   "use_autoclose": false,
   "languages": {
     "Python": {
-      "language_servers": ["pyright"],
       "formatter": {
         "external": {
-          "command": "/home/rober/lsp/.venv/bin/ruff",
-          "arguments": ["format", "-", "--line-length", "150"]
+          "command": "ruff",
+          "arguments": ["format", "-"]
         }
-      }
+      },
+      "language_servers": ["pyright", "ruff"]
     }
-  },
+  }, // END_LANGUAGES
   "lsp": {
     "gopls": {
       "initialization_options": {
@@ -48,27 +42,22 @@
     },
 
     "pyright": {
-      "settings": {
-        "python.analysis": {
-          "diagnosticMode": "workspace",
-          "typeCheckingMode": "strict"
-        }
+      "pycodestyle": {
+        "enabled": true,
+        "ignore": ["E501", "I001"]
       }
     },
-
     "clangd": {
       "binary": {
-        "path": "/usr/bin/clangd"
+        "path": "/usr/bin/clangd-17"
       }
     },
-
     "rust_analyzer": {
       "binary": {
         "path": "/home/rober/.cargo/bin/rust-analyzer",
         "arguments": []
       }
     }
-  },
-
+  }, // END_LSP
   "soft_wrap": "editor_width"
 }

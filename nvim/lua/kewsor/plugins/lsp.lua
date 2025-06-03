@@ -26,7 +26,7 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "clangd", "gopls", "lua_ls"
+                "clangd", "gopls", "lua_ls", "pylsp", "rust_analyzer"
             },
             handlers = {
                 function(server_name)
@@ -36,30 +36,17 @@ return {
                 end,
             },
         })
-        local rust = require("lspconfig")
-        rust.rust_analyzer.setup({
-            cmd = { "/home/rober/.cargo/bin/rust-analyzer" },
-            settings = {
-                ['rust-analyzer'] = {
-                    checkOnSave = {
-                        command = 'clippy',
-                    },
-                    diagnostics = {
-                        enable = true,
-                    },
-                }
-            },
+        local null_ls = require("null-ls")
+        local sources = {
+            null_ls.builtins.formatting.clang_format,
+            null_ls.builtins.formatting.black,
+        }
+        null_ls.setup({
+            sources = sources
         })
 
-        local null_ls = require("null-ls")
-        null_ls.setup({
-            sources = {
-                null_ls.builtins.formatting.clang_format,
-            },
-        })
         local cmp_nvim_lsp = require "cmp_nvim_lsp"
         require("lspconfig").clangd.setup {
-            --on_attach = on_attach,
             capabilities = cmp_nvim_lsp.default_capabilities(),
             cmd = {
                 "clangd",
@@ -78,7 +65,30 @@ return {
                 }
             }
         })
-
+        local rust = require("lspconfig")
+        rust.rust_analyzer.setup({
+            cmd = { "/home/rober/.cargo/bin/rust-analyzer" },
+            settings = {
+                ['rust-analyzer'] = {
+                    check = {
+                        command = 'clippy',
+                    },
+                    diagnostics = {
+                        enable = true,
+                    },
+                }
+            },
+        })
+        require("lspconfig").pylsp.setup({
+            settings = {
+                pylsp = {
+                    plugins = {
+                        flake8 = { enabled = true },
+                        black = { enabled = true },
+                    }
+                }
+            }
+        })
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
         cmp.setup({
             snippet = {

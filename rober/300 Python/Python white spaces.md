@@ -1,0 +1,1 @@
+Using `string.strip()` removes the white spaces at the beginning and at the end. but we also can use `string.lstrip()` to remove a the left (beginning), and `string.rstrip()` to remove a the right (end).

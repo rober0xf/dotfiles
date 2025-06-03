@@ -1,8 +1,0 @@
-BasedOnStyle: Google 
-IndentWidth: 4
-ColumnLimit: 90
-UseTab: Never 
-TabWidth: 2
-BreakBeforeBraces: Attach 
-IndentAccessModifiers: true
-AllowShortFunctionsOnASingleLine: InlineOnly

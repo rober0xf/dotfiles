@@ -22,8 +22,8 @@ require("lazy").setup({
     require("kewsor.plugins.colorscheme"),
     require("kewsor.plugins.lsp"),
     require("kewsor.plugins.undotree"),
-    require("kewsor.plugins.fidget"),
     require("kewsor.plugins.fzf"),
     require("kewsor.plugins.gitsigns"),
-    require("kewsor.plugins.none-ls")
+    require("kewsor.plugins.none-ls"),
+    require("kewsor.plugins.whitespaces"),
 })
