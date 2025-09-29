@@ -1,0 +1,105 @@
+{
+  "theme": "jellybeans",
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "inlay_hints": {
+    "enabled": false
+  },
+  "icon_theme": "Colored Zed Icons Theme Dark",
+  "vim_mode": true,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  }, // END_TELEMETRY
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "buffer_font_family": "JetBrains Mono",
+  "format_on_save": "off",
+  "show_whitespaces": "boundary",
+  "use_autoclose": false,
+  "languages": {
+    "Svelte": {
+      "show_edit_predictions": true
+    },
+    "JSONC": {
+      "show_edit_predictions": false
+    },
+    "Python": {
+      "show_edit_predictions": false,
+      "language_servers": ["basedpyright", "ruff", "!pyright"],
+      "formatter": [
+        {
+          "external": {
+            "command": "ruff",
+            "arguments": ["format", "-"]
+          }
+        },
+        {
+          "code_actions": {
+            "source.organizeImports.ruff": true,
+            "source.fixAll.ruff": true
+          }
+        }
+      ],
+      "format_on_save": "on"
+    },
+    "Vue.js": {
+      "language_servers": ["tailwindcss-language-server", "typescript", "volar"]
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "hints": {
+          "assignVariableTypes": true,
+          "compositeLiteralFields": true,
+          "compositeLiteralTypes": true,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
+        }
+      }
+    },
+    "rust_analyzer": {
+      "binary": {
+        "path": "/home/rober/.cargo/bin/rust-analyzer",
+        "arguments": []
+      }
+    },
+    "basedpyright": {
+      "settings": {
+        "python": {
+          "pythonPath": "./.venv/bin/python3"
+        },
+        "basedpyright.analysis": {
+          "diagnosticMode": "openFilesOnly",
+          "openFilesOnly": true,
+          "autoImportCompletions": false,
+          "inlayHints": {
+            "callArgumentNames": true,
+            "variableTypes": true,
+            "functionReturnTypes": true
+          }
+        }
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "tailwindCSS": {
+          "includeLanguages": {
+            "vue": "html",
+            "vue-html": "html"
+          },
+          "emmetCompletions": true
+        }
+      }
+    }
+  },
+  "soft_wrap": "editor_width",
+  "extend_comment_on_newline": false,
+  "cursor_shape": "bar",
+  "show_completions_on_input": false
+}
