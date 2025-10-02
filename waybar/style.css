@@ -11,6 +11,7 @@ window#waybar {
   border: none;
   margin: 0;
   padding: 0;
+  border-bottom: 3px solid #181818;
 }
 
 window#waybar.hidden {
