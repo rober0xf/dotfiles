@@ -1,11 +1,8 @@
 require("lazy_init")
 
 vim.opt.showmode = false
-
-vim.cmd("hi StatusLine guibg=#181818 guifg=#ffffff")
-vim.cmd('hi! LineNr guibg=#181818 guifg=#555555')
-vim.cmd("hi MsgArea guibg=#181818 guifg=#c5c8c6")
 vim.opt.guifont = "JetBrainsMono:h13"
+vim.opt.termguicolors = true
 
 vim.opt.guicursor = {
     "n-v-c:block",

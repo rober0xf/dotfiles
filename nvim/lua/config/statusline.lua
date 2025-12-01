@@ -1,21 +1,3 @@
--- mode
-vim.api.nvim_set_hl(0, "SLNormal", { fg = "#181818", bg = "#ffd700", bold = true })
-vim.api.nvim_set_hl(0, "SLInsert", { fg = "#181818", bg = "#32cd32", bold = true })
-vim.api.nvim_set_hl(0, "SLVisual", { fg = "#181818", bg = "#ff7518", bold = true })
-vim.api.nvim_set_hl(0, "SLReplace", { fg = "#181818", bg = "#ff2400", bold = true })
-vim.api.nvim_set_hl(0, "SLCommand", { fg = "#000000", bg = "#ff69b4", bold = true })
-
--- git
-vim.api.nvim_set_hl(0, "SLGitAdd", { fg = "#00ff00", bg = "NONE", bold = true })
-vim.api.nvim_set_hl(0, "SLGitChange", { fg = "#ffac1c", bg = "NONE", bold = true })
-vim.api.nvim_set_hl(0, "SLGitRemove", { fg = "#ff0000", bg = "NONE", bold = true })
-
--- diagnostics
-vim.api.nvim_set_hl(0, "SLDiagError", { fg = "#ff3131", bold = true })
-vim.api.nvim_set_hl(0, "SLDiagWarn", { fg = "#ffd700", bold = true })
-vim.api.nvim_set_hl(0, "SLDiagHint", { fg = "#00ffff", bold = true })
-vim.api.nvim_set_hl(0, "SLDiagInfo", { fg = "#89cff0", bold = true })
-
 -- set mode colors
 local function mode()
     local m = vim.fn.mode()
@@ -95,6 +77,14 @@ local function os_name()
     return sysname
 end
 
+local function lsp_name()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    if next(clients) == nil then
+        return "no-lsp"
+    end
+    return clients[1].name
+end
+
 function Statusline()
     return table.concat({
         "%#StatusLine#",
@@ -103,7 +93,8 @@ function Statusline()
         "%t",
         " :: ", git_branch(), " ", git_diff(), " ", diagnostics(),
         "%=",
-        os_name(), " :: %y",
+        lsp_name(),
+        " :: ", os_name(), " :: %y",
         " :: %p%%",
     })
 end

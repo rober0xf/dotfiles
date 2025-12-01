@@ -7,6 +7,7 @@ return {
                 go = { "goimports", "gofmt" },
                 yaml = { "prettier" },
                 lua = { "stylua" },
+                python = { "black" },
             },
             formatters = {
                 prettier = {
@@ -23,6 +24,11 @@ return {
                         },
                     }
                 },
+                black = {
+                    command = vim.fn.expand("~/pythonvim/venv/bin/black"),
+                    args = { "--line-length", "190", "-" },
+                    stdin = true,
+                },
             },
         },
         config = function(_, opts)
@@ -30,6 +36,7 @@ return {
             vim.lsp.buf.format = function(options)
                 require("conform").format({
                     lsp_fallback = true,
+                    async = true,
                     timeout_ms = options and options.timeout_ms or 1000,
                 })
             end

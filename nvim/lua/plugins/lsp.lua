@@ -27,7 +27,7 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "gopls", "lua_ls", "ts_ls", "rust_analyzer"
+                "gopls", "lua_ls", "vtsls"
             },
             handlers = {
                 function(server_name)
@@ -37,7 +37,6 @@ return {
                 end,
             },
         })
-
         -- remove "undefined global viariable vim" warning
         vim.lsp.config("lua_ls", {
             settings = {
@@ -50,40 +49,33 @@ return {
         })
 
         -- typescript --
-        vim.lsp.config("ts_ls", {
-            cmd = { "typescript-language-server", "--stdio" },
-            capabilities = capabilities,
-            root_dir = vim.fs.root(0, { "tsconfig.json", "package.json", ".git" }),
-            filetypes = { "typescript" },
+        vim.lsp.config("vtsls", {
+            cmd = { 'vtsls', '--stdio' },
+            filetypes = {
+                'javascript',
+                'javascriptreact',
+                'javascript.jsx',
+                'typescript',
+                'typescriptreact',
+                'typescript.tsx',
+            },
+            root_markers = { 'package-lock.json', 'tsconfig.json', 'jsconfig.json', 'bun.lockb', 'bun.lock', '.git' },
             settings = {
-                typescript = {
-                    format = {
-                        enable = true,
-                    },
-                },
-                workspace = {
-                    didChangeWatchedFiles = {
-                        dynamicRegistration = true,
+                vtsls = {
+                    tsserver = {
                     },
                 },
             },
+        })
+
+        vim.lsp.config("svelte", {
+            capabilities = capabilities,
+            root_dir = vim.fs.root(0, { "svelte.config.js", "package.json", ".git" }),
         })
         -- end --
 
-        -- rust --
-        vim.lsp.config("rust-analyzer", {
-            cmd = { "/home/rober/.cargo/bin/rust-analyzer" },
-            settings = {
-                ['rust-analyzer'] = {
-                    check = {
-                        command = 'clippy',
-                    },
-                    diagnostics = {
-                        enable = true,
-                    },
-                }
-            },
-        })
+        -- python --
+        vim.lsp.config("basedpyright", {})
         -- end --
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }

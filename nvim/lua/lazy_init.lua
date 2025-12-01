@@ -1,6 +1,7 @@
 require("config.remap")
 require("config.set")
 require("config.statusline")
+require("config.colors")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -28,5 +29,8 @@ require("lazy").setup({
     require("plugins.yazi"),
     require("plugins.harpoon"),
     require("plugins.lsp"),
-    require("config.colorscheme")
+    --    require("plugins.copilot"),
+    require("plugins.indent"),
+    require("plugins.fidget"),
+    require("config.colorscheme"),
 })

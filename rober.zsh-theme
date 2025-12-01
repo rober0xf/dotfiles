@@ -1,6 +1,0 @@
-PROMPT='%F{#ffdd33}%m%f%F{#95a99f}::%f%F{#73c936}%c%f: '
-RPROMPT='%F{#73c936}$(git_prompt_info)%f '
-ZSH_THEME_GIT_PROMPT_PREFIX="<%F{#ff5f1f}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%f"
-ZSH_THEME_GIT_PROMPT_DIRTY="%F{#73c936} %F{#ffdd33}✗%F{#73c936}>%f"
-ZSH_THEME_GIT_PROMPT_CLEAN="%F{#73c936}>"

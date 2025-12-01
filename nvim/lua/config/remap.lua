@@ -10,8 +10,9 @@ end
 -- format
 map("n", "<leader>f", function()
     require("conform").format({
+        async = true,
         lsp_fallback = true,
-        timeout_ms = 1000,
+        -- timeout_ms = 1000,
     })
 end, { desc = "format file" })
 
@@ -76,3 +77,10 @@ vim.keymap.set("n", "<C-Down>", "<C-w>j", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
 vim.keymap.set("n", "<leader>gS", ":Gitsigns stage_hunk<CR>", {})
 vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", {})
+
+-- copilot
+vim.g.copilot_no_tab_map = true
+vim.keymap.set('i', '<A-l>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false
+})
