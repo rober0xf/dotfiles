@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -11,15 +12,6 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
-
-type WeatherResponse struct {
-	Main struct {
-		Temp float64 `json:"temp"`
-	} `json:"main"`
-	Weather []struct {
-		Description string `json:"description"`
-	} `json:"weather"`
-}
 
 func main() {
 	err := godotenv.Load()
@@ -30,28 +22,68 @@ func main() {
 	city := os.Getenv("CITY")
 
 	url := fmt.Sprintf(
-		"https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric&lang=en",
-		city, api_key,
-	)
+		"https://www.meteosource.com/api/v1/free/point?place_id=%s&sections=all&timezone=UTC&language=en&units=metric&key=%s",
+		city, api_key)
 
 	resp, err := http.Get(url)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if resp.StatusCode != 200 {
 		panic(fmt.Sprintf("Error HTTP: %d", resp.StatusCode))
 	}
 
 	var data WeatherResponse
-	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		panic(err)
+	if err := json.Unmarshal(body, &data); err != nil {
+		log.Fatal(err)
 	}
 
-	temp := data.Main.Temp
-	desc := data.Weather[0].Description
+	temp := data.Current.Temperature
+	desc := data.Current.Summary
 
 	desc = cases.Title(language.English).String(desc)
-	fmt.Printf("%s: %.1f°C\n", desc, temp)
+
+	block := TextBar{
+		FullText: fmt.Sprintf("%s: <span foreground='%s'>%.1f°C</span>", desc, setColor(temp), temp),
+	}
+
+	b, _ := json.Marshal(block)
+	fmt.Println(string(b))
+}
+
+func setColor(temp float64) string {
+	switch {
+	case temp >= 31.0:
+		return "#FF0000"
+	case temp >= 26.0:
+		return "#FFA500"
+	case temp >= 20.0:
+		return "#FFFF00"
+	case temp >= 15:
+		return "#32CD32"
+	case temp >= 10.0:
+		return "#66CCFF"
+	case temp >= 0.0:
+		return "#0000FF"
+	default:
+		return "#00008B"
+	}
+}
+
+type WeatherResponse struct {
+	Current struct {
+		Temperature float64 `json:"temperature"`
+		Summary     string  `json:"summary"`
+	} `json:"current"`
+}
+
+type TextBar struct {
+	FullText string `json:"full_text"`
 }
