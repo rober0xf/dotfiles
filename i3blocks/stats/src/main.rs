@@ -14,10 +14,11 @@ fn main() {
         "cpu" => println!("CPU: {:.1}%", cpu_usage()),
         "ram" => println!("RAM: {:.1}%", ram_usage()),
         "bat" => {
-            let (percentaje, color) = battery_info();
-            println!("BAT: {}", percentaje);
-            println!("{}", percentaje);
-            println!("{}", color);
+            let (percentaje, color, status) = battery_info();
+            println!(
+                "<span foreground='{}'>BAT: {}% {}</span>",
+                color, percentaje, status
+            );
         }
         _ => eprintln!("unknown: {}", args),
     }
