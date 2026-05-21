@@ -1,0 +1,21 @@
+general.import = [
+    "~/.config/alacritty/themes/jellybeans-default.toml"
+]
+
+[font]
+normal = { family = "JetBrains Mono", style = "Regular" }
+bold = { family = "JetBrains Mono", style = "Bold" }
+italic = { family = "JetBrains Mono", style = "Italic" }
+bold_italic = { family = "JetBrains Mono", style = "Bold Italic" }
+size = 9
+offset = { x = 0, y = 1 }
+glyph_offset = { x = 0, y = 0 }
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+blink_interval = 500 
+unfocused_hollow = false 
+
+[window.padding]
+x = 5
+y = 5
