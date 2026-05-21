@@ -1,8 +1,5 @@
 .env
-weather
-uv.lock
-pyweather.spec
 
-/target
-**/build
-**/dist
+# binaries
+i3blocks/weather/weather
+i3blocks/stats/sysinfo
