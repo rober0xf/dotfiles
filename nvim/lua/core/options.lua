@@ -1,13 +1,3 @@
-vim.opt.guicursor = table.concat({
-    "n-v-c:block-blinkwait700-blinkon400-blinkoff250",
-    "i-ci:ver25-blinkwait700-blinkon400-blinkoff250",
-    "r-cr:hor20-blinkwait700-blinkon400-blinkoff250"
-}, ",")
-
-vim.defer_fn(function()
-
-end, 100)
-
 -- tabs
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -22,12 +12,14 @@ vim.opt.nu = true
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.winborder = "rounded"
+vim.opt.showmode = false
 
 -- info files
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
+vim.opt.encoding = "utf-8"
 
 -- hightlight when searching
 vim.opt.hlsearch = true

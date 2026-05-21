@@ -3,18 +3,9 @@ vim.g.maplocalleader = "\\"
 
 -- map easier
 local map = function(mode, lhs, rhs, opts)
-	opts = opts or { noremap = true, silent = true }
-	vim.keymap.set(mode, lhs, rhs, opts)
+    opts = opts or { noremap = true, silent = true }
+    vim.keymap.set(mode, lhs, rhs, opts)
 end
-
--- format
-map("n", "<leader>f", function()
-	require("conform").format({
-		async = true,
-		lsp_fallback = true,
-		-- timeout_ms = 1000,
-	})
-end, { desc = "format file" })
 
 -- references
 map("n", "<leader>gr", vim.lsp.buf.references, { desc = "see references" })
@@ -37,8 +28,8 @@ map("n", "P", '"+p', { desc = "paste from the clipboard" })
 
 -- diagnostics
 map("n", "<leader>w", vim.diagnostic.open_float, { desc = "diagnostics window" })
-map("n", "<leader>+", vim.diagnostic.goto_next, { desc = "go to next diagnostic" })
-map("n", "<leader>-", vim.diagnostic.goto_prev, { desc = "go to previous diagnostic" })
+map("n", "<leader>+", function() vim.diagnostic.jump({ count = 1, float = true }) end)
+map("n", "<leader>-", function() vim.diagnostic.jump({ count = -1, float = true }) end)
 
 -- move lines
 map("n", "K", ":m .-2<CR>==", { desc = "move current line up" })
@@ -64,7 +55,7 @@ map("n", "x", '"_x')
 map("n", "d", '"_d')
 
 -- select current word
-map("n", "Q", "viw", { noremap = true, silent = true })
+map("n", "W", "viw", { noremap = true, silent = true })
 
 -- tabs
 map("n", "<leader><Right>", ":tabnext<CR>", { noremap = true, silent = true })
@@ -84,6 +75,6 @@ map("n", "<leader>gb", ":Gitsigns blame_line<CR>", {})
 -- copilot
 vim.g.copilot_no_tab_map = true
 vim.keymap.set("i", "<A-l>", 'copilot#Accept("\\<CR>")', {
-	expr = true,
-	replace_keycodes = false,
+    expr = true,
+    replace_keycodes = false,
 })

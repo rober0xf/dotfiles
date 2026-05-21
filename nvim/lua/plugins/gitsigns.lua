@@ -1,29 +1,16 @@
-return {
-	"lewis6991/gitsigns.nvim",
-	config = function()
-		require("gitsigns").setup({
-			current_line_blame = true,
-			signs = {
-				add = { text = "┃" },
-				change = { text = "┃" },
-				delete = { text = "-" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		})
+require("gitsigns").setup({
+    current_line_blame = true,
+    signs = {
+        add = { text = "┃" },
+        change = { text = "┃" },
+        delete = { text = "-" },
+        topdelete = { text = "‾" },
+        changedelete = { text = "~" },
+    },
+})
 
-		vim.api.nvim_create_autocmd("ColorScheme", {
-			callback = function()
-				vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#00ff00", bg = "none", bold = true })
-				vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#ffac1c", bg = "none", bold = true })
-				vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff0000", bg = "none", bold = true })
-				vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#888888", bg = "none", italic = true })
-			end,
-		})
-
-		vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#00ff00", bg = "none", bold = true })
-		vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#ffac1c", bg = "none", bold = true })
-		vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff0000", bg = "none", bold = true })
-		vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#888888", bg = "none", italic = true })
-	end,
-}
+-- apply once for current session
+vim.api.nvim_set_hl(0, "SLGitAdd", { fg = "#5f875f", bg = "none", bold = true })
+vim.api.nvim_set_hl(0, "SLGitChange", { fg = "#af875f", bg = "none", bold = true })
+vim.api.nvim_set_hl(0, "SLGitRemove", { fg = "#af5f5f", bg = "none", bold = true })
+vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#888888", bg = "none", italic = true })

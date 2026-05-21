@@ -1,131 +1,152 @@
-return {
-	"neovim/nvim-lspconfig",
-	dependencies = {
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/cmp-nvim-lsp",
-		"nvim-lua/plenary.nvim",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
-		"hrsh7th/nvim-cmp",
-		"L3MON4D3/LuaSnip",
-		"saadparwaiz1/cmp_luasnip",
-		"nvimtools/none-ls.nvim",
-	},
+local cmp = require("cmp")
+local cmp_lsp = require("cmp_nvim_lsp")
 
-	config = function()
-		local cmp = require("cmp")
-		local cmp_lsp = require("cmp_nvim_lsp")
+local capabilities = vim.tbl_deep_extend(
+    "force",
+    {},
+    vim.lsp.protocol.make_client_capabilities(),
+    cmp_lsp.default_capabilities()
+)
 
-		local capabilities = vim.tbl_deep_extend(
-			"force",
-			{},
-			vim.lsp.protocol.make_client_capabilities(),
-			cmp_lsp.default_capabilities()
-		)
+require("mason").setup({
+    registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+    },
+})
 
-		require("mason").setup()
-		require("mason-lspconfig").setup({
-			ensure_installed = {
-				"gopls",
-				"vtsls",
-			},
-			handlers = {
-				function(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-					})
-				end,
-			},
-		})
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "gopls",
+        "vtsls",
+        "lua_ls",
+        "basedpyright"
+    },
+    handlers = {
+        function(server_name)
+            require("lspconfig")[server_name].setup({
+                capabilities = capabilities,
+            })
+        end,
+    },
+})
 
-		-- remove "undefined global viariable vim" warning
-		vim.lsp.config("lua_ls", {
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
-					},
-				},
-			},
-		})
+-- lua
+vim.lsp.config("lua_ls", {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { "vim" },
+            },
+        },
+    },
+})
+-- end lua --
 
-		-- typescript --
-		vim.lsp.config("vtsls", {
-			cmd = { "vtsls", "--stdio" },
-			filetypes = {
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
-			},
-			root_markers = { "package-lock.json", "tsconfig.json", "jsconfig.json", "bun.lockb", "bun.lock", ".git" },
-			settings = {
-				vtsls = {
-					tsserver = {},
-				},
-			},
-		})
+-- typescript
+vim.lsp.config("vtsls", {
+    cmd = { "vtsls", "--stdio" },
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+    },
+    root_markers = {
+        "package-lock.json",
+        "tsconfig.json",
+        "jsconfig.json",
+        "bun.lockb",
+        "bun.lock",
+        ".git",
+    },
+    settings = {
+        vtsls = {
+            tsserver = {},
+        },
+    },
+})
+-- end typescript --
 
-		vim.lsp.config("svelte", {
-			capabilities = capabilities,
-			root_dir = vim.fs.root(0, { "svelte.config.js", "package.json", ".git" }),
-		})
-		-- end --
+-- python
+vim.lsp.config("basedpyright", {
+    settings = {
+        basedpyright = {
+            disableOrganizeImports = true,
+            analysis = {
+                autoImportCompletions = false,
+                typeCheckingMode = "standard",
+            },
+        },
+    },
+})
 
-		-- python --
-		vim.lsp.config("basedpyright", {
-			settings = {
-				basedpyright = {
-					analysis = {
-						typeCheckingMode = "standard",
-						autoImportCompletions = false,
-						diagnosticSeverityOverrides = {
-							reportUnknownMemberType = "none",
-						},
-					},
-				},
-			},
-		})
-		-- end --
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("python_lsp_capabilities", { clear = true }),
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
 
-		local cmp_select = { behavior = cmp.SelectBehavior.Select }
-		cmp.setup({
-			snippet = {
-				expand = function(args)
-					require("luasnip").lsp_expand(args.body)
-				end,
-			},
-			mapping = cmp.mapping.preset.insert({
-				["<A-a>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
-				["<C-Space>"] = cmp.mapping.complete(),
-			}),
+        if client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false
+        end
 
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
-			}),
-		})
+        if client.name == "ruff" or client.name == "basedpyright" then
+            client.server_capabilities.documentFormattingProvider = false
+        end
+    end,
+})
 
-		vim.diagnostic.config({
-			update_in_insert = true,
-			virtual_text = true,
-			float = {
-				focusable = true,
-				style = "rounded",
-				border = "single",
-				source = "always",
-				header = "",
-				prefix = "-",
-				max_width = 100,
-				max_height = 100,
-			},
-		})
-	end,
-}
+vim.lsp.config("ruff", {
+    init_options = {
+        settings = {
+            args = {
+                "--config",
+                vim.fn.expand("~/.config/ruff/ruff.toml"),
+                "--fix",
+            },
+        },
+    },
+})
+
+vim.lsp.enable("ruff")
+-- end python --
+
+-- cmp
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<A-a>"] = cmp.mapping.select_prev_item(cmp_select),
+        ["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+    }),
+})
+
+vim.diagnostic.config({
+    update_in_insert = true,
+    virtual_text = true,
+    float = {
+        focusable = true,
+        style = "rounded",
+        border = "single",
+        source = "always",
+        header = "",
+        prefix = "-",
+        max_width = 100,
+        max_height = 100,
+    },
+})

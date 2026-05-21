@@ -1,16 +1,7 @@
-require("lazy_init")
+require("core")
+require("plugins")
 
-vim.opt.showmode = false
-vim.opt.guifont = "JetBrainsMono:h13"
-vim.opt.termguicolors = true
-
-vim.opt.guicursor = {
-    "n-v-c:block",
-    "i-ci-ve:ver25",
-    "r-cr:hor20",
-    "o:hor50",
-}
-
+-- do not block cursor after leaving nvim
 vim.api.nvim_create_autocmd("VimLeave", {
     pattern = "*",
     command = "set guicursor=a:ver25",
