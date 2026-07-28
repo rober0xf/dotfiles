@@ -1,5 +1,5 @@
 general.import = [
-    "~/.config/alacritty/themes/jellybeans-default.toml"
+    "~/.config/alacritty/themes/theme.toml"
 ]
 
 [font]

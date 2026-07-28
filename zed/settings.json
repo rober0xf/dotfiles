@@ -1,5 +1,15 @@
 {
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "agent": {
+    "dock": "right",
     "default_model": {
       "provider": "google",
       "model": "gemini-2.5-flash-lite"
@@ -17,6 +27,7 @@
     "provider": "zed",
   },
   "project_panel": {
+    "dock": "left",
     "indent_size": 17.0,
   },
   "theme": "Solarized Dark",

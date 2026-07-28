@@ -1,12 +1,12 @@
 vim.pack.add({
     {
-        src = "https://github.com/nickkadutskyi/jb.nvim",
-        name = "jb",
+        src = "https://github.com/mofiqul/vscode.nvim",
+        name = "vscode",
     }
 })
 
-require("jb").setup()
-vim.cmd.colorscheme("jb")
+vim.o.background = 'dark'
+vim.cmd.colorscheme("vscode")
 
 vim.api.nvim_set_hl(0, "Exception", {
     underline = false,

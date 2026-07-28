@@ -1,9 +1,9 @@
 exec_always --no-startup-id picom
 
 # screen lock
-bindsym $mod+Shift+l exec i3lock -i /home/rober0xf/Pictures/roman-blur.png 
+bindsym $mod+Shift+l exec i3lock -i /home/rober0xf/Pictures/boca.jpg
 exec --no-startup-id xss-lock --transfer-sleep-lock -- \
-    i3lock --nofork -i /home/rober0xf/Pictures/roman-blur.png
+    i3lock --nofork -i /home/rober0xf/Pictures/boca.jpg
 exec_always --no-startup-id xset s off
 exec_always --no-startup-id xset -dpms
 exec_always --no-startup-id xset s noblank
@@ -19,7 +19,7 @@ exec_always --no-startup-id setxkbmap latam
 
 # monitor
 exec_always --no-startup-id xrandr --output eDP-1 --mode 1920x1080 --rate 59
-exec_always --no-startup-id feh --bg-fill /home/rober0xf/Pictures/matthew.jpg
+exec_always --no-startup-id feh --bg-fill /home/rober0xf/Pictures/tool.jpeg
 
 # binds
 bindsym $mod+Return exec --no-startup-id $terminal 
@@ -146,9 +146,30 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+# borders
+client.focused          #C5A059  #C5A059  #000000  #C5A059   #C5A059
+client.focused_inactive #333333  #5F676A  #FFFFFF  #484E50   #333333
+client.unfocused        #222222  #222222  #888888  #292D2E   #222222
+client.urgent           #2F343F  #900000  #FFFFFF  #900000   #900000
+client.placeholder      #000000  #0C0C0C  #FFFFFF  #000000   #0C0C0C
+client.background       #FFFFFF
+
 bar {
         status_command i3blocks -c ~/.config/i3blocks/i3blocks.conf
         font pango:JetBrainsMono 10
         separator_symbol " | "
         tray_padding 10          
+
+        colors {
+                background #111111
+                statusline #ffffff
+                separator  #666666
+
+                focused_workspace     #103F79  #103F79  #FFFFFF
+                active_workspace      #333333  #333333  #FFFFFF
+                inactive_workspace    #111111  #111111  #888888
+                urgent_workspace      #2F343F  #900000  #FFFFFF
+            }
 }
+
+
