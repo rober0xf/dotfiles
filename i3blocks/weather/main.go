@@ -18,8 +18,8 @@ var colors = map[string]string{
 	"#FFFF00": "yellow",
 	"#00FF00": "limegreen",
 	"#66CCFF": "skyblue",
-	"#0000FF": "blue",
-	"#00008B": "darkblue",
+	"#00A2E8": "cyan-blue",
+	"#1A1AC6": "darkblue",
 }
 
 var translate = map[string]string{
@@ -27,30 +27,32 @@ var translate = map[string]string{
 	"Tormenta":            "Storm",
 	"Lluvia":              "Rain",
 	"Lluvia débil":        "Light Rain",
+	"Lluvia moderada":     "Moderate Rain",
 	"Parcialmente nuboso": "Partly Cloudy",
 	"Nublado":             "Cloudy",
 	"Cubierto":            "Overcast",
 	"Despejado":           "Clear",
 	"Cielo despejado":     "Mostly Clear",
 	"Nubes y claros":      "Cloudy Intervals",
+	"Niebla":              "Fog",
 }
 
 func setColor(temp int) string {
 	switch {
-	case temp >= 31.0:
+	case temp >= 31:
 		return "#FF0000"
-	case temp >= 26.0:
+	case temp >= 26:
 		return "#FFA500"
-	case temp >= 20.0:
+	case temp >= 20:
 		return "#FFFF00"
 	case temp >= 15:
 		return "#00FF00"
-	case temp >= 10.0:
+	case temp >= 10:
 		return "#66CCFF"
-	case temp >= 0.0:
-		return "#0000FF"
+	case temp >= 0:
+		return "#00A2E8"
 	default:
-		return "#00008B"
+		return "#1A1AC6"
 	}
 }
 
@@ -108,13 +110,12 @@ func main() {
 
 		description := strings.TrimSpace(descTag.Text())
 		colorHex := setColor(temp)
-		color := colors[colorHex]
 
 		desc, ok := translate[description]
 		if !ok {
 			desc = description
 		}
 
-		fmt.Printf(`%s: <span foreground="%s">%d°</span>`+"\n", desc, color, temp)
+		fmt.Printf(`%s: <span foreground="%s">%d°</span>`+"\n", desc, colorHex, temp)
 	}
 }
